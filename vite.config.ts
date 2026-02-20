@@ -21,6 +21,16 @@ export default defineConfig((configEnv) => {
     },
   };
 
+  const isPlaygroundMode =
+    configEnv.mode === "development:playground" || configEnv.mode === "production:playground";
+
+  if (isPlaygroundMode) {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "vue3-select-component/styles": resolve("./src/styles.css"),
+    };
+  }
+
   if (configEnv.mode === "development:playground") {
     config.root = resolve("./playground");
     config.plugins!.push(tailwindcss());
