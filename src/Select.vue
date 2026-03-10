@@ -366,7 +366,7 @@ watch(
       emit("search", search.value);
       focusedOption.value = -1;
 
-      if (!menuOpen.value) {
+      if (!menuOpen.value && newSearch.length > 0) {
         openMenu();
       }
     }
