@@ -58,6 +58,7 @@ watch(
     role="option"
     :aria-disabled="isDisabled"
     :aria-selected="isSelected"
+    @mousedown.prevent
     @click="emit('select')"
     @keydown.enter="emit('select')"
     @mouseenter="handleMouseEnter"
