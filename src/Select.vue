@@ -61,6 +61,7 @@ const inputRef = useTemplateRef("input");
 const indicatorsRef = useTemplateRef("indicators");
 
 const search = ref("");
+const searchDisplay = ref("");
 const menuOpen = ref(false);
 const focusedOption = ref(-1);
 // Used to fix an issue where input blur is triggered when clicking on an option.
@@ -157,6 +158,7 @@ function openMenu() {
 function closeMenu() {
   menuOpen.value = false;
   search.value = "";
+  searchDisplay.value = "";
   focusedOption.value = -1;
   isPointerDownInMenu.value = false;
 
@@ -183,6 +185,12 @@ function handleControlClick(event: MouseEvent) {
     }
   }
 };
+
+function handleSearchInput(e: Event) {
+  const value = (e.target as HTMLInputElement).value;
+  search.value = value;
+  searchDisplay.value = value;
+}
 
 function handleInputMousedown() {
   // If menu is open and search is empty, close it; otherwise open it
@@ -237,6 +245,7 @@ const setOption = (option: GenericOption) => {
   }
   else {
     search.value = "";
+    searchDisplay.value = "";
   }
 };
 
@@ -470,13 +479,13 @@ watch(
 
         <div
           class="input-container"
-          :class="[{ typing: menuOpen && search.length > 0 }, props.classes?.inputContainer]"
-          :data-value="search"
+          :class="[{ typing: menuOpen && (search.length > 0 || searchDisplay.length > 0) }, props.classes?.inputContainer]"
+          :data-value="searchDisplay"
         >
           <input
             :id="inputId"
             ref="input"
-            v-model="search"
+            :value="search"
             class="search-input"
             :class="props.classes?.searchInput"
             v-bind="inputAttributes"
@@ -484,6 +493,7 @@ watch(
             :aria-labelledby="`vue-select-${uid}-combobox`"
             :disabled="isDisabled"
             placeholder=""
+            @input="handleSearchInput"
             @mousedown="handleInputMousedown"
             @keydown="handleInputKeydown"
             @blur="handleInputBlur"
