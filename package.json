@@ -21,6 +21,7 @@
       "require": "./dist/index.umd.js"
     },
     "./styles": {
+      "types": "./dist/styles.d.ts",
       "import": "./dist/styles.css",
       "require": "./dist/styles.css"
     }
