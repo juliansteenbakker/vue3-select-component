@@ -22,7 +22,8 @@
     },
     "./styles": {
       "import": "./dist/styles.css",
-      "require": "./dist/styles.css"
+      "require": "./dist/styles.css",
+      "default": "./dist/styles.css"
     }
   },
   "main": "dist/index.umd.js",
